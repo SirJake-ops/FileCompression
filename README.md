@@ -2,6 +2,7 @@
 
 ## Overview
 The File Compression Project is a C++ application that provides functionality for compressing and decompressing files. It supports various compression formats and includes a user interface for managing compressed files.
+Project is still ongoing.
 
 ## Features
 - **File Compression**: Compress files into various formats (e.g., ZIP, TAR).
