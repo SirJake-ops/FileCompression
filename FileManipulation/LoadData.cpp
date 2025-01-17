@@ -10,52 +10,6 @@
 #include <iostream>
 #include <filesystem>
 
-//std::vector<std::uint8_t> LoadData::writeFile(const std::string &fileName, const std::string &fileDirectory) {
-//    try {
-//        const std::string completeFilePath = fileDirectory + "\\" + fileName;
-//        std::ifstream inFile(completeFilePath, std::ios::binary);
-//
-//
-//        if (!inFile.is_open()) {
-//            throw std::runtime_error("File could not be opened or does not exist. " + fileName);
-//        }
-//
-//        std::vector<std::uint8_t> readData((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
-//        inFile.close();
-//
-//        return readData;
-//    } catch (const std::exception &e) {
-//        std::cerr << "Exception caught: " << e.what() << std::endl;
-//    }
-//    return std::vector<std::uint8_t>();
-//}
-
-//void LoadData::readFile(const std::string &fileName, const std::string &filePath) {
-//    try {
-//        //Everthing until the outfile.write needs to be in new method.
-//        char buffer[1024];
-//        std::filesystem::path fileDirectory = std::filesystem::current_path();
-//        std::string tempFile = filePath + "\\temp_" + fileName;
-//        std::vector<std::uint8_t> binaryData = writeFile(fileName, filePath);
-//
-//
-//        std::ofstream outFile(tempFile, std::ios::binary);
-//
-//
-//
-//        if (!outFile.is_open()) {
-//            throw std::runtime_error("File could not be opened or does not exist. " + fileName);
-//        }
-//
-//        outFile.write(reinterpret_cast<const char *>(binaryData.data()), binaryData.size());
-//
-//        outFile.close();
-//
-//    } catch (const std::exception &e) {
-//        std::cerr << "Exception caught: " << e.what() << std::endl;
-//    }
-//}
-
 void LoadData::writeCompressedFile(const std::string &fileName, const std::string& filePath) {
     try {
         char buffer[1024];

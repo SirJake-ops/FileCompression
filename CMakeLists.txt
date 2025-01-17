@@ -8,9 +8,9 @@ set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/external/boost")
 set(BOOST_INCLUDEDIR "${BOOST_ROOT}")
 set(BOOST_LIBRARYDIR "${BOOST_ROOT}/stage/lib")
 
-find_package(Boost REQUIRED COMPONENTS system iostreams)
-find_package(ZLIB REQUIRED)
-find_package(BZip2 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
+#find_package(ZLIB REQUIRED)
+#find_package(BZip2 REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIR} ${BZIP2_INCLUDE_DIR})
 
@@ -28,4 +28,4 @@ add_subdirectory(test)
 find_package(OpenGL REQUIRED)
 
 target_include_directories(FileCompressionProject PRIVATE ${Boost_INCLUDE_DIRS})
-target_link_libraries(FileCompressionProject PRIVATE ZLIB::ZLIB ${BZIP2_LIBRARIES} imgui glfw OpenGL::GL Boost::asio Boost::iostreams ${Boost_LIBRARIES} ${ZLIB_LIBRARY})
+target_link_libraries(FileCompressionProject PRIVATE ZLIB::ZLIB ${BZIP2_LIBRARIES} imgui glfw OpenGL::GL Boost::iostreams ${Boost_LIBRARIES} ${ZLIB_LIBRARY})
