@@ -10,12 +10,13 @@ find_package(glfw3 REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIR} ${BZIP2_INCLUDE_DIR})
 
 add_executable(FileCompressionProject main.cpp
-    FileManipulation/FileData.cpp
-    FileManipulation/FileData.h
-    FileManipulation/LoadData.cpp
-    FileManipulation/LoadData.h
+        headers/FileManipulation/FileData.cpp
+        headers/FileManipulation/FileData.h
+        headers/FileManipulation/LoadData.cpp
+        headers/FileManipulation/LoadData.h
     external/ImGuiFileDialog/ImGuiFileDialog.cpp
-    FileManipulation/FileManipulationHelperMethod.h
+        headers/FileManipulation/FileManipulationHelperMethod.h
+        headers/ThreadFunctionality/ThreadPool.h
 )
 
 add_subdirectory(external)

@@ -19,8 +19,8 @@ add_executable(FileCompressionProjectTest
         hello_test.cpp
         LoadDataTests.cpp
         main_test.cpp
-        ../FileManipulation/LoadData.cpp
-        ../FileManipulation/FileData.cpp
+        ../headers/FileManipulation/LoadData.cpp
+        ../headers/FileManipulation/FileData.cpp
         FileDataTests.cpp
 )
 
