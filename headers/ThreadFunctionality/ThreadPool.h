@@ -9,7 +9,11 @@
 #include <mutex>
 #include <queue>
 
-
+/**
+ * TODO: This is an example class that I found online that I am planning on using for this functionality. \
+ * This is more than likely not the final class I will be using, but a very nice skeleton.
+ *
+ */
 class ThreadPool {
 public:
     void Start();
