@@ -26,14 +26,21 @@ Project is still ongoing.
     ```sh
     git clone https://github.com/yourusername/FileCompressionProject.git
     cd FileCompressionProject
+    git submodule update --init --recursive --remote
     ```
 
 2. Install dependencies using vcpkg:
     ```sh
     ./vcpkg install boost zlib bzip2 glfw3
     ```
+    Install dependencies Linux:
+   ```sh
+   cd external/boost
+   ./bootstrap.sh
+   ./b2 --with-iostreams
+   ```
 
-3. Configure and build the project:
+4. Configure and build the project:
     ```sh
     mkdir build
     cd build
