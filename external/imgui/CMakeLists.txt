@@ -4,8 +4,10 @@ project(ImGui)
 set(IMGUI_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 file(GLOB IMGUI_SOURCES
-    ${IMGUI_DIR}/*.cpp
-    ${IMGUI_DIR}/*.h
+        imgui.cpp
+        imgui_draw.cpp
+        imgui_demo.cpp
+        imgui_widgets.cpp
 )
 
 add_library(imgui STATIC ${IMGUI_SOURCES})

@@ -9,8 +9,6 @@ set(BOOST_INCLUDEDIR "${BOOST_ROOT}")
 set(BOOST_LIBRARYDIR "${BOOST_ROOT}/stage/lib")
 
 find_package(Boost REQUIRED COMPONENTS system)
-#find_package(ZLIB REQUIRED)
-#find_package(BZip2 REQUIRED)
 
 include_directories(${Boost_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIR} ${BZIP2_INCLUDE_DIR})
 
@@ -20,6 +18,7 @@ add_executable(FileCompressionProject main.cpp
         FileManipulation/LoadData.cpp
         FileManipulation/LoadData.h
         external/ImGuiFileDialog/ImGuiFileDialog.cpp
+        external/imgui/imgui.cpp
         FileManipulation/FileManipulationHelperMethod.h
 )
 
@@ -27,5 +26,5 @@ add_subdirectory(external)
 add_subdirectory(test)
 find_package(OpenGL REQUIRED)
 
-target_include_directories(FileCompressionProject PRIVATE ${Boost_INCLUDE_DIRS})
-target_link_libraries(FileCompressionProject PRIVATE ZLIB::ZLIB ${BZIP2_LIBRARIES} imgui glfw OpenGL::GL Boost::iostreams ${Boost_LIBRARIES} ${ZLIB_LIBRARY})
+target_include_directories(FileCompressionProject PRIVATE ${Boost_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/external/imgui)
+target_link_libraries(FileCompressionProject PRIVATE ${BZIP2_LIBRARIES} imgui glfw OpenGL::GL ${Boost_LIBRARIES})

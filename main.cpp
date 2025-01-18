@@ -1,12 +1,13 @@
 #include <iostream>
 #include "imgui.h"
 
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "FileManipulation/LoadData.h"
-#include "external/ImGuiFileDialog/ImGuiFileDialog.h"
-#include <GLFW/glfw3.h>
 #include <memory>
+
+#include "external/glfw/include/GLFW/glfw3.h"
+#include "external/imgui/imgui.h"
+#include "external/imgui/imgui_impl_glfw.h"
+#include "external/imgui/imgui_impl_opengl3.h"
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
