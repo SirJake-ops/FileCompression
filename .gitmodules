@@ -13,3 +13,6 @@
 [submodule "external/bzip2"]
 	path = external/bzip2
 	url = https://sourceware.org/git/bzip2.git
+[submodule "external/ImGuiFileDialog"]
+	path = external/ImGuiFileDialog
+	url = https://github.com/aiekick/ImGuiFileDialog.git

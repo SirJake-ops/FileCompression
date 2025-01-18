@@ -3,11 +3,11 @@
 
 #include "FileManipulation/LoadData.h"
 #include <memory>
+#include <GLFW/glfw3.h>
 
-#include "external/glfw/include/GLFW/glfw3.h"
-#include "external/imgui/imgui.h"
 #include "external/imgui/imgui_impl_glfw.h"
 #include "external/imgui/imgui_impl_opengl3.h"
+#include "external/ImGuiFileDialog/ImGuiFileDialog.h"
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
