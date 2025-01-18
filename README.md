@@ -29,13 +29,13 @@ Project is still ongoing.
     git submodule update --init --recursive --remote
     ```
 
+   download boost from website [Boost Downloads](https://www.boost.org/users/download/)
 2. Install dependencies using vcpkg:
     ```sh
     ./vcpkg install boost zlib bzip2 glfw3
     ```
-    Install dependencies Linux:
+   Install dependencies Linux:
    ```sh
-   cd external/boost
    ./bootstrap.sh
    ./b2 --with-iostreams
    ```

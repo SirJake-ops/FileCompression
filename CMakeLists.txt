@@ -2,24 +2,18 @@ cmake_minimum_required(VERSION 3.30)
 project(FileCompressionProject)
 
 set(CMAKE_CXX_STANDARD 20)
-set(Boost_DIR "${CMAKE_SOURCE_DIR}/external/boost")
 
-set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/external/boost")
-set(BOOST_INCLUDEDIR "${BOOST_ROOT}")
-set(BOOST_LIBRARYDIR "${BOOST_ROOT}/stage/lib")
-
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS)
 
 include_directories(${Boost_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIR} ${BZIP2_INCLUDE_DIR})
 
 add_executable(FileCompressionProject main.cpp
-        FileManipulation/FileData.cpp
-        FileManipulation/FileData.h
-        FileManipulation/LoadData.cpp
-        FileManipulation/LoadData.h
-        external/ImGuiFileDialog/ImGuiFileDialog.cpp
-        external/imgui/imgui.cpp
-        FileManipulation/FileManipulationHelperMethod.h
+    FileManipulation/FileData.cpp
+    FileManipulation/FileData.h
+    FileManipulation/LoadData.cpp
+    FileManipulation/LoadData.h
+    external/ImGuiFileDialog/ImGuiFileDialog.cpp
+    FileManipulation/FileManipulationHelperMethod.h
 )
 
 add_subdirectory(external)
