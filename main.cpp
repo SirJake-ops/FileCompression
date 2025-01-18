@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
 
         if (showFileDialog) {
             //Here we open a dialog to choose a file that we will support for compression. So far thinking it will only be media file types, mostly if not all video files.
+            ImGui::SetNextWindowSize(ImVec2(600, 400));
             ImGuiFileDialog::Instance()->OpenDialog("ChooseFileDlgKey", "Choose File",
                                                     ".mp4,.avi,.mkv,.mov,.flv,.wmv,.webm,.png,.jpg,.jpeg,.bmp,.gif,.tiff,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar,.7z,.tar,.gz,.iso");
             showFileDialog = false;
