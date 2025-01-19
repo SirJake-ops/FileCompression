@@ -12,6 +12,36 @@ void ThreadPool::Start() {
     }
 }
 
+void ThreadPool::QueueJob(const std::function<void()> &job) {
+    {
+        std::unique_lock<std::mutex> lock(queueMutex_);
+        jobs_.push(job);
+    }
+    mutexCondition_.notify_one();
+}
+
+void ThreadPool::Stop() {
+    {
+        std::unique_lock<std::mutex> lock(queueMutex_);
+        should_terminate = true;
+    }
+    mutexCondition_.notify_all();
+    for (auto& activeThread : threads_) {
+        activeThread.join();
+    }
+    threads_.clear();
+}
+
+bool ThreadPool::busy() {
+    bool poolBusy;
+    {
+        std::unique_lock<std::mutex> lock(queueMutex_);
+        poolBusy = !jobs_.empty();
+    }
+    return poolBusy;
+}
+
+
 void ThreadPool::ThreadLoop() {
     while (true) {
         std::function<void()> job;
