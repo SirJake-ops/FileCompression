@@ -20,6 +20,8 @@ public:
 
     virtual std::vector<std::uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) = 0;
 
+    virtual void batchTheFileForCompression(std::vector<uint8_t> &fileData, const int backSegmentSize,
+                                            const int batchCount) = 0;
 };
 
 

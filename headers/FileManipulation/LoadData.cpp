@@ -64,3 +64,8 @@ std::vector<uint8_t> LoadData::readCompressedFile(const std::string &fileName, c
     return {};
 }
 
+void LoadData::batchTheFileForCompression(const std::vector<uint8_t> fileData, const int batchSegmentSize,
+    const int batchCount) {
+
+}
+

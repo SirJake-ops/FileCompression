@@ -42,12 +42,14 @@ public:
     LoadData() = default;
 
     explicit LoadData(const std::string &filename, const std::string &filePath) : filename_(
-            std::move(filename)), filePath_(filePath) {}
+        std::move(filename)), filePath_(filePath) {
+    }
 
     ~LoadData() = default;
 
-    void writeCompressedFile(const std::string &fileName, const std::string& filePath) override;
-    std::vector<uint8_t> readCompressedFile(const std::string& fileName, const std::string& filePath) override;
+    void writeCompressedFile(const std::string &fileName, const std::string &filePath) override;
+
+    std::vector<uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
 
     const std::string getFileName() const {
@@ -59,6 +61,9 @@ public:
     }
 
 private:
+    void batchTheFileForCompression(const std::vector<uint8_t> fileData, const int batchSegmentSize,
+                                    const int batchCount);
+
     std::string filename_;
     std::string filePath_;
     std::mutex mutex_;
