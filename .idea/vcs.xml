@@ -2,7 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/external/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/ImGuiFileDialog" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/bzip2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/external/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/external/zlib" vcs="Git" />
   </component>
 </project>
