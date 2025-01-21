@@ -34,31 +34,34 @@
 #include <cstdint>
 #include <vector>
 #include <memory>
-#include <fstream>
+#include "configs/OSConfig.h"
 #include "FileManipulationHelperMethod.h"
 
 class LoadData : FileManipulationHelperMethod {
 public:
-    LoadData() = default;
+    LoadData(): osName_(OS_NAME){}
 
     explicit LoadData(const std::string &filename, const std::string &filePath) : filename_(
-            std::move(filename)), filePath_(filePath) {}
+        std::move(filename)), filePath_(filePath), osName_(OS_NAME) {
+    }
 
     ~LoadData() = default;
 
-    void writeCompressedFile(const std::string &fileName, const std::string& filePath) override;
-    std::vector<uint8_t> readCompressedFile(const std::string& fileName, const std::string& filePath) override;
+    void writeCompressedFile(const std::string &fileName, const std::string &filePath) override;
+
+    std::vector<uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
 
-    const std::string getFileName() const {
+    std::string getFileName() const {
         return this->filename_;
     }
 
-    const std::string getFilePath() const {
+    std::string getFilePath() const {
         return this->filePath_;
     }
 
 private:
+    std::string osName_;
     std::string filename_;
     std::string filePath_;
     std::mutex mutex_;

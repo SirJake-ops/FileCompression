@@ -1,13 +1,13 @@
 #include <iostream>
 #include "imgui.h"
 
-#include "FileManipulation/LoadData.h"
 #include <memory>
 #include <GLFW/glfw3.h>
 
 #include "external/imgui/imgui_impl_glfw.h"
 #include "external/imgui/imgui_impl_opengl3.h"
 #include "external/ImGuiFileDialog/ImGuiFileDialog.h"
+#include "headers/FileManipulation/LoadData.h"
 
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
@@ -17,8 +17,9 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
-void LoadDataOperationsServices(std::unique_ptr<LoadData>& loadData, const std::string& fileName, const std::string& filePath) {
-    loadData->readCompressedFile(fileName, filePath);
+void LoadDataOperationsServices(const std::unique_ptr<LoadData>& loadData, const std::string& fileName, const std::string& filePath) {
+    loadData->writeCompressedFile(fileName, filePath);
+    std::cout << "Outside of the write compressed file method" << std::endl;
 }
 
 

@@ -4,7 +4,8 @@
 
 
 #include <gtest/gtest.h>
-#include "../FileManipulation/FileData.h"
+
+#include "FileManipulation/FileData.h"
 
 
 TEST(FileDataTest, BasicAssertions) {

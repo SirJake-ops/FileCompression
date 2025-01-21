@@ -14,12 +14,12 @@
 
 class FileManipulationHelperMethod {
 public:
+    virtual ~FileManipulationHelperMethod() = default;
     FileManipulationHelperMethod() = default;
 
     virtual void writeCompressedFile(const std::string &fileName, const std::string &filePath) = 0;
 
     virtual std::vector<std::uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) = 0;
-
 };
 
 
