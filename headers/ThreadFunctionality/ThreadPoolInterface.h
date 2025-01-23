@@ -20,6 +20,8 @@ public:
 
     virtual int getThreadCount() const = 0;
 
+    virtual int getQueueCount() const = 0;
+
     virtual bool getShouldTerminate() const = 0;
 };
 

@@ -4,11 +4,12 @@
 
 #include "ThreadPool.h"
 
-ThreadPool::~ThreadPool() = default;
+template<typename Func>
+ThreadPool<Func>::~ThreadPool() = default;
 
-ThreadPool::ThreadPool() = default;
 
-void ThreadPool::Start() {
+template<typename Func>
+void ThreadPool<Func>::Start() {
     const uint32_t numberOfThreads = std::thread::hardware_concurrency() / 2;
 
     for (uint32_t i = 0; i < numberOfThreads; ++i) {
@@ -16,14 +17,16 @@ void ThreadPool::Start() {
     }
 }
 
-void ThreadPool::QueueJob(const std::function<void()> &job) { {
+template<typename Func>
+void ThreadPool<Func>::QueueJob(const std::function<void()> &job) { {
         std::unique_lock<std::mutex> lock(queueMutex_);
         jobs_.push(job);
     }
     mutexCondition_.notify_one();
 }
 
-void ThreadPool::Stop() { {
+template<typename Func>
+void ThreadPool<Func>::Stop() { {
         std::unique_lock<std::mutex> lock(queueMutex_);
         should_terminate = true;
     }
@@ -34,7 +37,8 @@ void ThreadPool::Stop() { {
     threads_.clear();
 }
 
-bool ThreadPool::busy() {
+template<typename Func>
+bool ThreadPool<Func>::busy() {
     bool poolBusy; {
         std::unique_lock<std::mutex> lock(queueMutex_);
         poolBusy = !jobs_.empty();
@@ -42,16 +46,24 @@ bool ThreadPool::busy() {
     return poolBusy;
 }
 
-int ThreadPool::getThreadCount() const {
+template<typename Func>
+int ThreadPool<Func>::getThreadCount() const {
     return this->threads_.size();
 }
 
-bool ThreadPool::getShouldTerminate() const {
+template<typename Func>
+int ThreadPool<Func>::getQueueCount() const {
+    return this->jobs_.size();
+}
+
+template<typename Func>
+bool ThreadPool<Func>::getShouldTerminate() const {
     return this->should_terminate;
 }
 
 
-void ThreadPool::ThreadLoop() {
+template<typename Func>
+void ThreadPool<Func>::ThreadLoop() {
     while (true) {
         std::function<void()> job; {
             std::unique_lock<std::mutex> lock(queueMutex_);

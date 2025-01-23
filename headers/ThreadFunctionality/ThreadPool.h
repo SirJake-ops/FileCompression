@@ -15,10 +15,11 @@
  * This is more than likely not the final class I will be using, but a very nice skeleton.
  *
  */
-class ThreadPool : public ThreadPoolInterface {
+
+template<typename Func>
+class ThreadPool final : public ThreadPoolInterface {
 public:
     ~ThreadPool() override;
-    ThreadPool();
     void Start() override;
 
     void QueueJob(const std::function<void()> &job) override;
@@ -28,6 +29,8 @@ public:
     bool busy() override;
 
     int getThreadCount() const override;
+
+    int getQueueCount() const override;
 
     bool getShouldTerminate() const override;
 
@@ -40,7 +43,7 @@ private:
     std::mutex queueMutex_;
     std::condition_variable mutexCondition_;
     std::vector<std::thread> threads_;
-    std::queue<std::function<void()> > jobs_;
+    std::queue<std::function<Func> > jobs_;
 };
 
 
