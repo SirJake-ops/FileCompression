@@ -26,7 +26,9 @@ void ThreadPool<Func>::QueueJob(const std::function<void()> &job) { {
 }
 
 template<typename Func>
-void ThreadPool<Func>::Stop() { {
+void ThreadPool<Func>::Stop() {
+    // NOLINT
+    {
         std::unique_lock<std::mutex> lock(queueMutex_);
         should_terminate = true;
     }
@@ -39,7 +41,9 @@ void ThreadPool<Func>::Stop() { {
 
 template<typename Func>
 bool ThreadPool<Func>::busy() {
-    bool poolBusy; {
+    bool poolBusy;
+    //NOLINT
+    {
         std::unique_lock<std::mutex> lock(queueMutex_);
         poolBusy = !jobs_.empty();
     }

@@ -46,3 +46,15 @@ TEST(ThreadPoolQueueJobTest, BasicAssertions) {
 
     EXPECT_EQ(result, 1);
 }
+
+TEST(ThreadPoolStopTest, BasicAssertions) {
+    MockThreadPool mock_thread_pool;
+
+    EXPECT_CALL(mock_thread_pool, Stop()).Times(1);
+    EXPECT_CALL(mock_thread_pool, getThreadCount()).WillOnce(testing::Return(0));
+
+    mock_thread_pool.Stop();
+    const int result = mock_thread_pool.getThreadCount();
+
+    EXPECT_EQ(result, 0);
+}
