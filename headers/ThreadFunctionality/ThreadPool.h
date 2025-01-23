@@ -8,21 +8,30 @@
 #include <functional>
 #include <mutex>
 #include <queue>
+#include "ThreadFunctionality/ThreadPoolInterface.h"
 
 /**
  * TODO: This is an example class that I found online that I am planning on using for this functionality. \
  * This is more than likely not the final class I will be using, but a very nice skeleton.
  *
  */
-class ThreadPool {
+class ThreadPool : public ThreadPoolInterface {
 public:
-    void Start();
+    ~ThreadPool() override;
+    ThreadPool();
+    void Start() override;
 
-    void QueueJob(const std::function<void()> &job);
+    void QueueJob(const std::function<void()> &job) override;
 
-    void Stop();
+    void Stop() override;
 
-    bool busy();
+    bool busy() override;
+
+    int getThreadCount() const override;
+
+    bool getShouldTerminate() const override;
+
+
 
 private:
     void ThreadLoop();

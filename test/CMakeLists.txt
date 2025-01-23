@@ -23,6 +23,9 @@ add_executable(FileCompressionProjectTest
         ../headers/FileManipulation/FileData.cpp
         FileDataTests.cpp
         ThreadPoolTests.cpp
+        ../headers/ThreadFunctionality/ThreadPool.cpp
+        ../headers/ThreadFunctionality/ThreadPool.h
+        ../headers/ThreadFunctionality/ThreadPoolInterface.h
 )
 
 target_link_libraries(FileCompressionProjectTest gtest gtest_main gmock gmock_main ${Boost_LIBRARIES} z)

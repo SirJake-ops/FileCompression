@@ -45,7 +45,7 @@ public:
         std::move(filename)), filePath_(filePath), osName_(OS_NAME) {
     }
 
-    ~LoadData() = default;
+    ~LoadData() override = default;
 
     void writeCompressedFile(const std::string &fileName, const std::string &filePath) override;
 

@@ -4,6 +4,10 @@
 
 #include "ThreadPool.h"
 
+ThreadPool::~ThreadPool() = default;
+
+ThreadPool::ThreadPool() = default;
+
 void ThreadPool::Start() {
     const uint32_t numberOfThreads = std::thread::hardware_concurrency() / 2;
 
@@ -12,43 +16,47 @@ void ThreadPool::Start() {
     }
 }
 
-void ThreadPool::QueueJob(const std::function<void()> &job) {
-    {
+void ThreadPool::QueueJob(const std::function<void()> &job) { {
         std::unique_lock<std::mutex> lock(queueMutex_);
         jobs_.push(job);
     }
     mutexCondition_.notify_one();
 }
 
-void ThreadPool::Stop() {
-    {
+void ThreadPool::Stop() { {
         std::unique_lock<std::mutex> lock(queueMutex_);
         should_terminate = true;
     }
     mutexCondition_.notify_all();
-    for (auto& activeThread : threads_) {
+    for (auto &activeThread: threads_) {
         activeThread.join();
     }
     threads_.clear();
 }
 
 bool ThreadPool::busy() {
-    bool poolBusy;
-    {
+    bool poolBusy; {
         std::unique_lock<std::mutex> lock(queueMutex_);
         poolBusy = !jobs_.empty();
     }
     return poolBusy;
 }
 
+int ThreadPool::getThreadCount() const {
+    return this->threads_.size();
+}
+
+bool ThreadPool::getShouldTerminate() const {
+    return this->should_terminate;
+}
+
 
 void ThreadPool::ThreadLoop() {
     while (true) {
-        std::function<void()> job;
-        {
+        std::function<void()> job; {
             std::unique_lock<std::mutex> lock(queueMutex_);
             mutexCondition_.wait(lock, [this] {
-              return !jobs_.empty() || should_terminate;
+                return !jobs_.empty() || should_terminate;
             });
 
             if (should_terminate) {
