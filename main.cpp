@@ -24,7 +24,6 @@ void LoadDataOperationsServices(const std::unique_ptr<LoadData>& loadData, const
 
 
 int main(int argc, char *argv[]) {
-    std::cout << "Still works!" << std::endl;
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW\n";
         return -1;

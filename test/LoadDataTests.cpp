@@ -10,6 +10,8 @@
 
 class LoadDataInterface {
 public:
+    virtual ~LoadDataInterface() = default;
+
     virtual std::vector<uint8_t> getFileData(const std::string& fileName, const std::string& filePath) = 0;
 };
 
