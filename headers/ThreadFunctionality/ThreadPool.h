@@ -6,6 +6,7 @@
 #define THREADPOOL_H
 #include <condition_variable>
 #include <functional>
+#include <future>
 #include <mutex>
 #include <queue>
 #include "ThreadFunctionality/ThreadPoolInterface.h"
@@ -20,6 +21,7 @@ template<typename Func>
 class ThreadPool final : public ThreadPoolInterface {
 public:
     ~ThreadPool() override;
+
     void Start() override;
 
     void QueueJob(const std::function<void()> &job) override;
@@ -34,7 +36,12 @@ public:
 
     bool getShouldTerminate() const override;
 
+    void processFileChunk(const Chunk &chunk) override;
 
+    std::vector<Chunk> createChunks(const std::string &fileName, const std::size_t fileSize) override;
+
+    template<typename F, typename... Args>
+    auto enqueue(F &&f, Args &&... args) -> std::future<std::result_of_t<F(Args...)> >;
 
 private:
     void ThreadLoop();

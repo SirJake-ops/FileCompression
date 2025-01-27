@@ -12,11 +12,7 @@
 #ifndef FILECOMPRESSIONPROJECT_FILEMANIPULATIONHELPERMETHOD_H
 #define FILECOMPRESSIONPROJECT_FILEMANIPULATIONHELPERMETHOD_H
 
-struct Chunk {
-    std::string filename_;
-    std::size_t start_;
-    std::size_t end_;
-};
+
 
 class FileManipulationHelperMethod {
 public:
@@ -28,9 +24,6 @@ public:
 
     virtual std::vector<std::uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) = 0;
 
-    virtual void processFileChunk(const Chunk& chunk) = 0;
-
-    virtual std::vector<Chunk> createChunks(const std::size_t fileSize) = 0;
 };
 
 

@@ -5,6 +5,11 @@
 #ifndef THREADPOOLINTERFACE_H
 #define THREADPOOLINTERFACE_H
 
+struct Chunk {
+    std::string filename_;
+    std::size_t start_;
+    std::size_t end_;
+};
 
 class ThreadPoolInterface {
 public:
@@ -23,6 +28,10 @@ public:
     virtual int getQueueCount() const = 0;
 
     virtual bool getShouldTerminate() const = 0;
+
+    virtual void processFileChunk(const Chunk &chunk) = 0;
+
+    virtual std::vector<Chunk> createChunks(const std::string &fileName, const std::size_t fileSize) = 0;
 };
 
 

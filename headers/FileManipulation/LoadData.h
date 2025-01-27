@@ -51,8 +51,6 @@ public:
 
     std::vector<uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
-    template<typename F, typename ...Args>
-    auto enqueue(F&& f, Args&& ...args) -> std::future<std::result_of_t<F(Args...)>>;
 
 
     std::string getFileName() const {
