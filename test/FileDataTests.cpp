@@ -11,7 +11,7 @@
 TEST(FileDataTest, BasicAssertions) {
     std::vector<uint8_t> fakeData;
     std::string fakeFileName{"Fake Name"};
-    std::unique_ptr<FileData> fileData = std::make_unique<FileData>(fakeFileName, fakeData);
+    const auto fileData = std::make_unique<FileData>(fakeFileName, fakeData);
 
     ASSERT_EQ(fileData->getFileName(), fakeFileName);
     ASSERT_EQ(fileData->getFileData(), fakeData);
