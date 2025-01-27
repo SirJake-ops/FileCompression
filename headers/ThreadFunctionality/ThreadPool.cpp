@@ -4,6 +4,8 @@
 
 #include "ThreadPool.h"
 
+#include <fstream>
+
 template<typename Func>
 ThreadPool<Func>::~ThreadPool() = default;
 
@@ -66,12 +68,18 @@ bool ThreadPool<Func>::getShouldTerminate() const {
 }
 
 template<typename Func>
-void ThreadPool<Func>::processFileChunk(const Chunk &chunk) {
+void ThreadPool<Func>::processFileChunk(std::vector<std::future<void> > &futures, const std::vector<Chunk> &chunks) {
+    for (const auto& chunk : chunks) {
+        futures.push_back(enqueue(processChunk, chunk));
+    }
+
+    for (auto& future: futures) {
+        future.wait();
+    }
 }
 
 template<typename Func>
-std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string& fileName, const std::size_t fileSize) {
-
+std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string &fileName, const std::size_t fileSize) {
     const int threadCount = std::thread::hardware_concurrency() / 2;
 
     const std::size_t chunkSize = fileSize / threadCount;
@@ -103,7 +111,6 @@ auto ThreadPool<Func>::enqueue(F &&f, Args &&... args) -> std::future<std::resul
     return res;
 }
 
-
 template<typename Func>
 void ThreadPool<Func>::ThreadLoop() {
     while (true) {
@@ -123,4 +130,11 @@ void ThreadPool<Func>::ThreadLoop() {
 
         job();
     }
+}
+
+template<typename Func>
+void ThreadPool<Func>::processChunk(std::ifstream& file, const Chunk& chunk) {
+    std::vector<char> buffer(chunk.end_ - chunk.start_);
+    file.seekg(chunk.start_);
+    file.read(buffer.data(), buffer.size());
 }
