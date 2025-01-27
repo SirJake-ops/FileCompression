@@ -20,8 +20,6 @@ add_executable(FileCompressionProjectTest
         LoadDataTests.cpp
         main_test.cpp
         ../headers/FileManipulation/LoadData.cpp
-        ../headers/FileManipulation/FileData.cpp
-        FileDataTests.cpp
         ThreadPoolTests.cpp
         ../headers/ThreadFunctionality/ThreadPool.cpp
         ../headers/ThreadFunctionality/ThreadPool.h
