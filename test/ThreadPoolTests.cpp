@@ -16,6 +16,11 @@ public:
     MOCK_METHOD(void, Stop, (), (override));
     MOCK_METHOD(bool, busy, (), (override));
     MOCK_METHOD(bool, getShouldTerminate, (), (const, override));
+    MOCK_METHOD(void, processFileChunk, (std::vector<std::future<void>>& futures, const std::vector<Chunk>& chunks),
+                (override));
+    MOCK_METHOD(std::vector<Chunk>, createChunks, (const std::string& fileName, const std::size_t fileSize),
+                (override));
+    MOCK_METHOD(void, processChunk, (std::ifstream& file, const Chunk& chunk), (override));
 };
 
 TEST(ThreadPoolStartTest, BasicAssertions) {
