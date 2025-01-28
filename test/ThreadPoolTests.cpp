@@ -22,6 +22,16 @@ public:
     MOCK_METHOD(std::vector<Chunk>, createChunks, (const std::string& fileName, const std::size_t fileSize),
                 (override));
     MOCK_METHOD(void, processChunk, (std::ifstream& file, const Chunk& chunk), (override));
+
+
+    template<typename F, typename... Args>
+    auto enqueue(F &&f, Args &&... args) -> std::future<typename std::result_of<F(Args...)>::type> {
+        using return_type = typename std::result_of<F(Args...)>::type;
+        std::promise<return_type> promise;
+        auto future = promise.get_future();
+        promise.set_value(f(std::forward<Args>(args)...));
+        return future;
+    }
 };
 
 TEST(ThreadPoolStartTest, BasicAssertions) {
@@ -108,4 +118,16 @@ TEST(ThreadPoolCreateChunksTest, BasicAssertions) {
     const int expectedSize = chunks.size();
 
     EXPECT_EQ(result.size(), expectedSize);
+}
+
+TEST(ThreadPoolEnqueueTest, BasicAssertions) {
+    MockThreadPool mock_thread_pool;
+
+    auto job = []() { return 42; };
+
+    auto future = mock_thread_pool.enqueue(job);
+
+    const int result = future.get();
+
+    EXPECT_EQ(result, 42);
 }
