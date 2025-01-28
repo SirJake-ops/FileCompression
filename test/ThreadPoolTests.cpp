@@ -66,7 +66,7 @@ TEST(ThreadPoolStopTest, BasicAssertions) {
 }
 
 
-TEST(ThreadPoolProcessFileChunkTest, BassicAssertions) {
+TEST(ThreadPoolProcessFileChunkTest, BasicAssertions) {
     MockThreadPool mock_thread_pool;
     std::vector<std::future<void> > futures;
     std::vector<Chunk> chunks = {
@@ -74,7 +74,6 @@ TEST(ThreadPoolProcessFileChunkTest, BassicAssertions) {
         {"test2.dat", 1024, 2048},
         {"test3.dat", 2048, 3072},
     };
-
 
     EXPECT_CALL(mock_thread_pool, processChunk(testing::_, testing::_)).Times(chunks.size());
 
@@ -85,7 +84,28 @@ TEST(ThreadPoolProcessFileChunkTest, BassicAssertions) {
         }));
     }
 
-    for (auto& future : futures) {
+    for (auto &future: futures) {
         future.wait();
     }
+}
+
+TEST(ThreadPoolCreateChunksTest, BasicAssertions) {
+    MockThreadPool mock_thread_pool;
+    const int threadCount = std::thread::hardware_concurrency() / 2;
+    constexpr std::size_t fileSize = 1024 * 1024;
+    const std::size_t chunkSize = fileSize / threadCount;
+
+    std::vector<Chunk> chunks;
+
+    for (std::size_t start = 0; start < fileSize; start += chunkSize) {
+        std::size_t end = std::min(start + chunkSize, fileSize);
+        chunks.push_back({"testFile.dat", start, end});
+    }
+    EXPECT_CALL(mock_thread_pool, createChunks("testFile.dat", fileSize)).WillOnce(testing::Return(chunks));
+
+    auto result = mock_thread_pool.createChunks("testFile.dat", fileSize);
+
+    const int expectedSize = chunks.size();
+
+    EXPECT_EQ(result.size(), expectedSize);
 }
