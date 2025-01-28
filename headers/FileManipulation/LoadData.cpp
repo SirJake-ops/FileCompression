@@ -30,7 +30,7 @@ void LoadData::writeCompressedFile(const std::string &fileName, const std::strin
         inFile.close();
 
         std::string tempFile;
-         if (osName_ == "Windows") {
+        if (osName_ == "Windows") {
             tempFile = filePath + "\\temp_" + fileName + ".gz";
         } else {
             tempFile = filePath + "/temp_" + fileName + ".gz";
@@ -53,7 +53,6 @@ void LoadData::writeCompressedFile(const std::string &fileName, const std::strin
         outFile.close();
 
         std::cout << "Compression is finished" << std::endl;
-
     } catch (const std::exception &e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     }

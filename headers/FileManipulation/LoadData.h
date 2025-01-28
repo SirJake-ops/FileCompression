@@ -52,6 +52,7 @@ public:
     std::vector<uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
 
+
     std::string getFileName() const {
         return this->filename_;
     }
