@@ -3,6 +3,7 @@
 //
 
 
+#include <fstream>
 #include <gmock/gmock-function-mocker.h>
 #include <gtest/gtest.h>
 #include "ThreadFunctionality/ThreadPool.h"
@@ -62,4 +63,29 @@ TEST(ThreadPoolStopTest, BasicAssertions) {
     const int result = mock_thread_pool.getThreadCount();
 
     EXPECT_EQ(result, 0);
+}
+
+
+TEST(ThreadPoolProcessFileChunkTest, BassicAssertions) {
+    MockThreadPool mock_thread_pool;
+    std::vector<std::future<void> > futures;
+    std::vector<Chunk> chunks = {
+        {"test1.dat", 0, 1024},
+        {"test2.dat", 1024, 2048},
+        {"test3.dat", 2048, 3072},
+    };
+
+
+    EXPECT_CALL(mock_thread_pool, processChunk(testing::_, testing::_)).Times(chunks.size());
+
+    for (const auto &chunk: chunks) {
+        futures.push_back(std::async(std::launch::async, [&mock_thread_pool, &chunk]() {
+            std::ifstream file(chunk.filename_);
+            mock_thread_pool.processChunk(file, chunk);
+        }));
+    }
+
+    for (auto& future : futures) {
+        future.wait();
+    }
 }
