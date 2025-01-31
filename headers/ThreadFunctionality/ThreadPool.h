@@ -11,8 +11,10 @@
 #include <queue>
 #include "ThreadFunctionality/ThreadPoolInterface.h"
 
+template<typename T>
+concept functionVoid = std::same_as<T, std::function<void()>>;
 
-template<typename Func>
+template<functionVoid Func>
 class ThreadPool final : public ThreadPoolInterface {
 public:
     ~ThreadPool() override;

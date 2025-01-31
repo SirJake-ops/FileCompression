@@ -6,11 +6,11 @@
 
 #include <fstream>
 
-template<typename Func>
+template<functionVoid Func>
 ThreadPool<Func>::~ThreadPool() = default;
 
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::Start() {
     const uint32_t numberOfThreads = std::thread::hardware_concurrency() / 2;
 
@@ -19,7 +19,7 @@ void ThreadPool<Func>::Start() {
     }
 }
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::QueueJob(const std::function<void()> &job) { {
         std::unique_lock<std::mutex> lock(queueMutex_);
         jobs_.push(job);
@@ -27,7 +27,7 @@ void ThreadPool<Func>::QueueJob(const std::function<void()> &job) { {
     mutexCondition_.notify_one();
 }
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::Stop() {
     // NOLINT
     {
@@ -41,7 +41,7 @@ void ThreadPool<Func>::Stop() {
     threads_.clear();
 }
 
-template<typename Func>
+template<functionVoid Func>
 bool ThreadPool<Func>::busy() {
     bool poolBusy;
     //NOLINT
@@ -52,22 +52,22 @@ bool ThreadPool<Func>::busy() {
     return poolBusy;
 }
 
-template<typename Func>
+template<functionVoid Func>
 int ThreadPool<Func>::getThreadCount() const {
     return this->threads_.size();
 }
 
-template<typename Func>
+template<functionVoid Func>
 int ThreadPool<Func>::getQueueCount() const {
     return this->jobs_.size();
 }
 
-template<typename Func>
+template<functionVoid Func>
 bool ThreadPool<Func>::getShouldTerminate() const {
     return this->should_terminate;
 }
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::processFileChunk(std::vector<std::future<void> > &futures, const std::vector<Chunk> &chunks) {
     for (const auto& chunk : chunks) {
         futures.push_back(enqueue(processChunk, chunk));
@@ -78,7 +78,7 @@ void ThreadPool<Func>::processFileChunk(std::vector<std::future<void> > &futures
     }
 }
 
-template<typename Func>
+template<functionVoid Func>
 std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string &fileName, const std::size_t fileSize) {
     const int threadCount = std::thread::hardware_concurrency() / 2;
 
@@ -94,7 +94,7 @@ std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string &fileName, c
     return chunks;
 }
 
-template<typename Func>
+template<functionVoid Func>
 template<typename F, typename... Args>
 auto ThreadPool<Func>::enqueue(F &&f, Args &&... args) -> std::future<std::result_of_t<F(Args...)> > {
     using return_type = typename std::result_of_t<F(Args...)>::type;
@@ -111,7 +111,7 @@ auto ThreadPool<Func>::enqueue(F &&f, Args &&... args) -> std::future<std::resul
     return res;
 }
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::ThreadLoop() {
     while (true) {
         std::function<void()> job; {
@@ -132,7 +132,7 @@ void ThreadPool<Func>::ThreadLoop() {
     }
 }
 
-template<typename Func>
+template<functionVoid Func>
 void ThreadPool<Func>::processChunk(std::ifstream& file, const Chunk& chunk) {
     std::vector<char> buffer(chunk.end_ - chunk.start_);
     file.seekg(chunk.start_);

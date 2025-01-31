@@ -19,7 +19,6 @@
 
 void LoadDataOperationsServices(const std::unique_ptr<LoadData>& loadData, const std::string& fileName, const std::string& filePath) {
     loadData->writeCompressedFile(fileName, filePath);
-    std::cout << "Outside of the write compressed file method" << std::endl;
 }
 
 
