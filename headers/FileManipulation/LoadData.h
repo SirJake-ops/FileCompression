@@ -49,7 +49,7 @@ public:
 
     void writeCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
-    std::vector<uint8_t> readCompressedFile(const std::string &fileName, const std::string &filePath) override;
+    std::vector<uint8_t> downloadCompressedFile(const std::string &fileName, const std::string &filePath) override;
 
 
 

@@ -10,8 +10,12 @@
 #include <iostream>
 #include <filesystem>
 
+#include "ThreadFunctionality/ThreadPool.h"
+
 void LoadData::writeCompressedFile(const std::string &fileName, const std::string &filePath) {
     try {
+        auto thread_pool = std::make_unique<ThreadPool<std::function<void()>>>();
+        thread_pool->Start();
         std::filesystem::path fileDirectory = std::filesystem::current_path();
         std::string completeFilePath;
         if (osName_ == "Windows") {
@@ -58,7 +62,7 @@ void LoadData::writeCompressedFile(const std::string &fileName, const std::strin
     }
 }
 
-std::vector<uint8_t> LoadData::readCompressedFile(const std::string &fileName, const std::string &filePath) {
+std::vector<uint8_t> LoadData::downloadCompressedFile(const std::string &fileName, const std::string &filePath) {
     try {
         std::string completeFilePath;
         if (osName_ == "Windows") {

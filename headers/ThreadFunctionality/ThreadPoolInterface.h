@@ -29,11 +29,11 @@ public:
 
     virtual bool getShouldTerminate() const = 0;
 
-    virtual void processFileChunk(std::vector<std::future<void>>& futures, const std::vector<Chunk>& chunks) = 0;
-
-    virtual std::vector<Chunk> createChunks(const std::string &fileName, const std::size_t fileSize) = 0;
-
-    virtual void processChunk(std::ifstream& file, const Chunk& chunk) = 0;
+    // virtual void processFileChunk(std::vector<std::future<void()>>& futures, const std::vector<Chunk>& chunks) = 0;
+    //
+    // virtual std::vector<Chunk> createChunks(const std::string &fileName, const std::size_t fileSize) = 0;
+    //
+    // virtual void processChunk(std::ifstream& file, const Chunk& chunk) = 0;
 };
 
 

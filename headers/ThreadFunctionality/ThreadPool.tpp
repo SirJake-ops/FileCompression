@@ -67,49 +67,49 @@ bool ThreadPool<Func>::getShouldTerminate() const {
     return this->should_terminate;
 }
 
-template<functionVoid Func>
-void ThreadPool<Func>::processFileChunk(std::vector<std::future<void> > &futures, const std::vector<Chunk> &chunks) {
-    for (const auto& chunk : chunks) {
-        futures.push_back(enqueue(processChunk, chunk));
-    }
-
-    for (auto& future: futures) {
-        future.wait();
-    }
-}
-
-template<functionVoid Func>
-std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string &fileName, const std::size_t fileSize) {
-    const int threadCount = std::thread::hardware_concurrency() / 2;
-
-    const std::size_t chunkSize = fileSize / threadCount;
-
-    std::vector<Chunk> chunks;
-
-    for (std::size_t start = 0; start < fileSize; start += chunkSize) {
-        std::size_t end = std::min(start + chunkSize, fileSize);
-        chunks.push_back({fileName, start, end});
-    }
-
-    return chunks;
-}
-
-template<functionVoid Func>
-template<typename F, typename... Args>
-auto ThreadPool<Func>::enqueue(F &&f, Args &&... args) -> std::future<std::result_of_t<F(Args...)> > {
-    using return_type = typename std::result_of_t<F(Args...)>::type;
-
-    auto task = std::make_shared<std::packaged_task<return_type()> >(
-        std::bind(std::forward<F>(f), std::forward<Args>(args)...)
-    );
-
-    std::future<return_type> res = task->get_future(); {
-        std::unique_lock<std::mutex> lock(queueMutex_);
-        jobs_.emplace([task] { (*task)(); });
-    }
-    mutexCondition_.notify_all();
-    return res;
-}
+// template<functionVoid Func>
+// void ThreadPool<Func>::processFileChunk(std::vector<std::future<void()> > &futures, const std::vector<Chunk> &chunks) {
+//     for (const auto &chunk: chunks) {
+//         futures.push_back(enqueue(&ThreadPool::processFileChunk, this, std::ref(chunk)));
+//     }
+//
+//     for (auto &future: futures) {
+//         future.wait();
+//     }
+// }
+//
+// template<functionVoid Func>
+// std::vector<Chunk> ThreadPool<Func>::createChunks(const std::string &fileName, const std::size_t fileSize) {
+//     const int threadCount = std::thread::hardware_concurrency() / 2;
+//
+//     const std::size_t chunkSize = fileSize / threadCount;
+//
+//     std::vector<Chunk> chunks;
+//
+//     for (std::size_t start = 0; start < fileSize; start += chunkSize) {
+//         std::size_t end = std::min(start + chunkSize, fileSize);
+//         chunks.push_back({fileName, start, end});
+//     }
+//
+//     return chunks;
+// }
+//
+// template<functionVoid Func>
+// template<typename F, typename... Args>
+// auto ThreadPool<Func>::enqueue(F &&f, Args &&... args) -> std::future<std::result_of_t<F(Args...)> > {
+//     using return_type = typename std::result_of_t<F(Args...)>::type;
+//
+//     auto task = std::make_shared<std::packaged_task<return_type()> >(
+//         std::bind(std::forward<F>(f), std::forward<Args>(args)...)
+//     );
+//
+//     std::future<return_type> res = task->get_future(); {
+//         std::unique_lock<std::mutex> lock(queueMutex_);
+//         jobs_.emplace([task] { (*task)(); });
+//     }
+//     mutexCondition_.notify_all();
+//     return res;
+// }
 
 template<functionVoid Func>
 void ThreadPool<Func>::ThreadLoop() {
@@ -132,9 +132,9 @@ void ThreadPool<Func>::ThreadLoop() {
     }
 }
 
-template<functionVoid Func>
-void ThreadPool<Func>::processChunk(std::ifstream& file, const Chunk& chunk) {
-    std::vector<char> buffer(chunk.end_ - chunk.start_);
-    file.seekg(chunk.start_);
-    file.read(buffer.data(), buffer.size());
-}
+// template<functionVoid Func>
+// void ThreadPool<Func>::processChunk(std::ifstream &file, const Chunk &chunk) {
+//     std::vector<char> buffer(chunk.end_ - chunk.start_);
+//     file.seekg(chunk.start_);
+//     file.read(buffer.data(), buffer.size());
+// }
